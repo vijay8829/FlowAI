@@ -3,6 +3,9 @@
   command = "npm install && npm run build"
   publish = "frontend/dist"
 
+[build.environment]
+  NODE_VERSION = "18"
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
