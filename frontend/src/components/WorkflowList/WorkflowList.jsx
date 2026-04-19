@@ -42,7 +42,7 @@ function StatsBanner({ workflows, stats }) {
   ];
 
   return (
-    <div className="grid grid-cols-4 gap-3 mb-6 stagger">
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6 stagger">
       {cards.map(({ label, value, icon: Icon, color, bg }) => (
         <div key={label} className="stat-card anim-fade-up">
           <div className="flex items-center justify-between">
@@ -263,18 +263,18 @@ export default function WorkflowList() {
 
   return (
     <div className="flex-1 overflow-y-auto">
-      <div className="max-w-4xl mx-auto px-6 py-6">
+      <div className="max-w-4xl mx-auto px-4 md:px-6 py-4 md:py-6">
 
         {/* Page header */}
-        <div className="flex items-start justify-between mb-6">
+        <div className="flex items-start justify-between mb-5 gap-3">
           <div>
-            <h1 className="text-xl font-bold text-white mb-0.5 tracking-tight">Workflows</h1>
-            <p className="text-sm text-slate-600">
+            <h1 className="text-lg md:text-xl font-bold text-white mb-0.5 tracking-tight">Workflows</h1>
+            <p className="text-xs md:text-sm text-slate-600">
               {workflows.length > 0 ? `${workflows.length} workflow${workflows.length !== 1 ? 's' : ''}` : 'Build AI-powered automations'}
             </p>
           </div>
-          <button onClick={() => setCreating(true)} className="btn-md btn-glow btn-primary">
-            <Plus size={16} /> New Workflow
+          <button onClick={() => setCreating(true)} className="btn-sm md:btn-md btn-glow btn-primary shrink-0">
+            <Plus size={14} /> <span className="hidden sm:inline">New Workflow</span><span className="sm:hidden">New</span>
           </button>
         </div>
 
@@ -329,7 +329,7 @@ export default function WorkflowList() {
             </div>
 
             <p className="text-[11px] font-bold text-slate-600 uppercase tracking-widest text-center mb-4">Start from a template</p>
-            <div className="grid grid-cols-2 gap-3 stagger">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 stagger">
               {TEMPLATES.map(t => (
                 <button key={t.name} onClick={() => handleTemplate(t)}
                   className={`text-left p-4 rounded-2xl border bg-gradient-to-br ${t.color} ${t.border} hover:brightness-125 transition-all duration-200 anim-fade-up group`}>

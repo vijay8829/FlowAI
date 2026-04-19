@@ -70,7 +70,7 @@ export default function CommandPalette({ onClose }) {
 
   return (
     <div className="cmd-overlay" onClick={onClose}>
-      <div className="cmd-box" onClick={e => e.stopPropagation()} onKeyDown={handleKey}>
+      <div className="cmd-box w-full mx-3 md:mx-0 md:w-[560px]" onClick={e => e.stopPropagation()} onKeyDown={handleKey}>
         {/* Search input */}
         <div className="flex items-center gap-3 px-4 py-3.5 border-b border-white/[0.07]">
           <Search size={16} className="text-slate-500 shrink-0" />

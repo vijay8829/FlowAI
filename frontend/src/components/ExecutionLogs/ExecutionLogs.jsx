@@ -121,7 +121,7 @@ function StepRow({ step, isLast }) {
 }
 
 /* ── Execution detail ────────────────────────────────────── */
-function ExecutionDetail({ execution, onClose }) {
+function ExecutionDetail({ execution, onClose, showBack }) {
   const [steps, setSteps]   = useState(execution.steps || []);
   const [status, setStatus] = useState(execution.status);
   const esRef = useRef(null);
@@ -175,7 +175,10 @@ function ExecutionDetail({ execution, onClose }) {
               <span>{steps.length} step{steps.length !== 1 ? 's' : ''}</span>
             </div>
           </div>
-          <button onClick={onClose} className="btn btn-ghost btn-xs text-slate-600">✕</button>
+          <button onClick={onClose} className="btn btn-ghost btn-xs text-slate-600">
+            {showBack ? <span className="md:hidden">← Back</span> : null}
+            <span className={showBack ? 'hidden md:inline' : ''}>✕</span>
+          </button>
         </div>
       </div>
 
@@ -301,9 +304,9 @@ export default function ExecutionLogs() {
   const counts = { all: executions.length, success: executions.filter(e => e.status === 'success').length, failed: executions.filter(e => e.status === 'failed').length, running: executions.filter(e => e.status === 'running').length };
 
   return (
-    <div className="flex flex-1 overflow-hidden">
-      {/* Sidebar */}
-      <div className="w-72 border-r border-white/[0.06] flex flex-col bg-panel shrink-0">
+    <div className="flex flex-1 overflow-hidden flex-col md:flex-row">
+      {/* Sidebar — full width on mobile when no selection, else hidden */}
+      <div className={`${selected ? 'hidden md:flex' : 'flex'} md:w-72 w-full border-r border-white/[0.06] flex-col bg-panel shrink-0`}>
         {/* Header */}
         <div className="px-4 py-3 border-b border-white/[0.06] flex items-center justify-between">
           <div>
@@ -377,6 +380,7 @@ export default function ExecutionLogs() {
           key={selected.id}
           execution={selected}
           onClose={() => setSelected(null)}
+          showBack={true}
         />
       ) : (
         <div className="flex-1 flex items-center justify-center">

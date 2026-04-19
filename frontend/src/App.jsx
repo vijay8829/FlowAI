@@ -96,8 +96,8 @@ export default function App() {
           <BuilderToolbar onSave={handleSave} onRun={handleRun} saving={saving} />
         )}
 
-        {/* View area */}
-        <main className="flex flex-1 overflow-hidden">
+        {/* View area — add bottom padding on mobile for bottom nav */}
+        <main className="flex flex-1 overflow-hidden pb-[56px] md:pb-0">
           {view === 'list' && (
             <div key="list" className="flex flex-1 overflow-hidden anim-fade-in">
               <WorkflowList />

@@ -133,6 +133,23 @@ export default function Canvas({ onSaveRef, onRunRef }) {
 
   return (
     <div className="flex flex-1 overflow-hidden relative">
+      {/* Mobile notice */}
+      <div className="md:hidden absolute inset-0 z-50 flex flex-col items-center justify-center bg-bg/95 backdrop-blur-sm px-6 text-center">
+        <div className="w-16 h-16 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center mb-4">
+          <span className="text-3xl">🖥️</span>
+        </div>
+        <h2 className="text-base font-bold text-white mb-2">Open on Desktop</h2>
+        <p className="text-sm text-slate-500 leading-relaxed max-w-xs">
+          The workflow builder works best on a larger screen. View your workflows and logs below.
+        </p>
+        <button
+          onClick={() => useWorkflowStore.getState().setView('list')}
+          className="mt-5 btn-sm btn-primary"
+        >
+          ← Back to Workflows
+        </button>
+      </div>
+
       <NodePalette />
 
       {/* Canvas area */}
