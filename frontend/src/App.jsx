@@ -31,10 +31,10 @@ function Toast({ toast, onRemove }) {
   }, []);
 
   return (
-    <div className={`flex items-start gap-3 px-4 py-3 rounded-xl border shadow-card max-w-sm backdrop-blur-sm ${cls} ${leaving ? 'opacity-0 translate-x-2 transition-all duration-200' : 'anim-fade-up'}`}>
+    <div className={`flex items-start gap-3 px-3 py-2.5 rounded-xl border shadow-card max-w-[calc(100vw-2rem)] backdrop-blur-sm ${cls} ${leaving ? 'opacity-0 translate-x-2 transition-all duration-200' : 'anim-fade-up'}`}>
       <Icon size={14} className={`${text} mt-0.5 shrink-0`} />
-      <p className="text-xs text-slate-200 flex-1 leading-relaxed">{toast.message}</p>
-      <button onClick={dismiss} className={`${text} opacity-60 hover:opacity-100 transition-opacity mt-0.5`}>
+      <p className="text-xs text-slate-200 flex-1 leading-relaxed break-words">{toast.message}</p>
+      <button onClick={dismiss} className={`${text} opacity-60 hover:opacity-100 transition-opacity mt-0.5 shrink-0`}>
         <X size={12} />
       </button>
     </div>
@@ -49,21 +49,17 @@ export default function App() {
   const saveRef = useRef(null);
   const runRef  = useRef(null);
 
-  // Bootstrap
   useEffect(() => {
     fetchWorkflows();
     fetchNodeTypes();
   }, []);
 
-  // Global keyboard shortcuts
   useEffect(() => {
     function onKey(e) {
-      const isMac = navigator.platform.toUpperCase().includes('MAC');
-      const meta = isMac ? e.metaKey : e.ctrlKey;
+      const meta = e.metaKey || e.ctrlKey;
       if (meta && e.key === 'k') { e.preventDefault(); setCmdOpen(o => !o); }
       if (e.key === 'Escape' && cmdOpen) setCmdOpen(false);
       if (meta && e.key === 's') { e.preventDefault(); handleSave(); }
-      // Quick nav shortcuts (only when not in an input)
       if (!e.target.closest('input, textarea, select')) {
         if (e.key === '1') useWorkflowStore.getState().setView('list');
         if (e.key === '2') useWorkflowStore.getState().setView('logs');
@@ -85,42 +81,29 @@ export default function App() {
   }
 
   return (
-    <div className="flex h-screen bg-bg overflow-hidden">
-      {/* Sidebar */}
+    /* Use dvh for mobile browser toolbar awareness */
+    <div className="app-root">
+      {/* Desktop sidebar — hidden on mobile */}
       <Sidebar onCommandPalette={() => setCmdOpen(true)} />
 
-      {/* Main content */}
-      <div className="flex flex-col flex-1 overflow-hidden">
-        {/* Builder toolbar — only in builder view */}
+      {/* Main column */}
+      <div className="app-main">
         {view === 'builder' && (
           <BuilderToolbar onSave={handleSave} onRun={handleRun} saving={saving} />
         )}
 
-        {/* View area — add bottom padding on mobile for bottom nav */}
-        <main className="flex flex-1 overflow-hidden pb-[56px] md:pb-0">
-          {view === 'list' && (
-            <div key="list" className="flex flex-1 overflow-hidden anim-fade-in">
-              <WorkflowList />
-            </div>
-          )}
-          {view === 'builder' && (
-            <div key="builder" className="flex flex-1 overflow-hidden anim-fade-in">
-              <Canvas onSaveRef={saveRef} onRunRef={runRef} />
-            </div>
-          )}
-          {view === 'logs' && (
-            <div key="logs" className="flex flex-1 overflow-hidden anim-fade-in">
-              <ExecutionLogs />
-            </div>
-          )}
-        </main>
+        {/* Scrollable content */}
+        <div className="app-content">
+          {view === 'list'    && <WorkflowList />}
+          {view === 'builder' && <Canvas onSaveRef={saveRef} onRunRef={runRef} />}
+          {view === 'logs'    && <ExecutionLogs />}
+        </div>
       </div>
 
-      {/* Command Palette overlay */}
       {cmdOpen && <CommandPalette onClose={() => setCmdOpen(false)} />}
 
-      {/* Toast stack */}
-      <div className="fixed bottom-5 right-5 z-[9999] flex flex-col gap-2 pointer-events-none items-end">
+      {/* Toast stack — above bottom nav */}
+      <div className="fixed bottom-20 md:bottom-5 right-4 z-[9999] flex flex-col gap-2 pointer-events-none items-end max-w-sm">
         {toasts.map(t => (
           <div key={t.id} className="pointer-events-auto">
             <Toast toast={t} onRemove={removeToast} />

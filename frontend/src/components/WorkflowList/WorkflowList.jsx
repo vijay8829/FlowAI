@@ -154,7 +154,7 @@ function WorkflowCard({ workflow, stat, onOpen, onRun, onDelete, onToggle, runni
         )}
 
         {/* Stats row */}
-        <div className="flex items-center gap-0 border border-white/[0.06] rounded-xl overflow-hidden bg-white/[0.02]">
+        <div className="flex items-center border border-white/[0.06] rounded-xl overflow-x-auto bg-white/[0.02]">
           <div className="flex-1 px-3 py-2 border-r border-white/[0.06]">
             <div className="text-[10px] text-slate-700 mb-0.5">Nodes</div>
             <div className="text-sm font-semibold text-slate-400">{nodes.length}</div>
@@ -262,8 +262,8 @@ export default function WorkflowList() {
   );
 
   return (
-    <div className="flex-1 overflow-y-auto">
-      <div className="max-w-4xl mx-auto px-4 md:px-6 py-4 md:py-6">
+    <div className="w-full">
+      <div className="max-w-4xl mx-auto px-4 py-4 md:px-6 md:py-6">
 
         {/* Page header */}
         <div className="flex items-start justify-between mb-5 gap-3">

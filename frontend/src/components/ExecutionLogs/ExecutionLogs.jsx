@@ -156,7 +156,7 @@ function ExecutionDetail({ execution, onClose, showBack }) {
   const hasTriggerData = execution.trigger_data && Object.keys(execution.trigger_data).length > 0;
 
   return (
-    <div className="flex-1 overflow-y-auto anim-fade-in">
+    <div className="flex-1 min-w-0 overflow-y-auto anim-fade-in">
       {/* Sticky header */}
       <div className="sticky top-0 z-10 bg-[#0d0f17]/95 backdrop-blur-sm border-b border-white/[0.06] px-5 py-3.5">
         <div className="flex items-start justify-between gap-3">
@@ -304,9 +304,9 @@ export default function ExecutionLogs() {
   const counts = { all: executions.length, success: executions.filter(e => e.status === 'success').length, failed: executions.filter(e => e.status === 'failed').length, running: executions.filter(e => e.status === 'running').length };
 
   return (
-    <div className="flex flex-1 overflow-hidden flex-col md:flex-row">
-      {/* Sidebar — full width on mobile when no selection, else hidden */}
-      <div className={`${selected ? 'hidden md:flex' : 'flex'} md:w-72 w-full border-r border-white/[0.06] flex-col bg-panel shrink-0`}>
+    <div className="flex h-full overflow-hidden flex-col md:flex-row">
+      {/* List panel — full width on mobile when no detail open */}
+      <div className={`${selected ? 'hidden md:flex' : 'flex'} md:w-72 w-full flex-col bg-panel shrink-0 border-b md:border-b-0 md:border-r border-white/[0.06]`}>
         {/* Header */}
         <div className="px-4 py-3 border-b border-white/[0.06] flex items-center justify-between">
           <div>

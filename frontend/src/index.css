@@ -336,3 +336,49 @@
 
 /* ── Node connection glow on run ──────────────────────────── */
 .edge-running .react-flow__edge-path { stroke: #6366f1 !important; }
+
+/* ── App root layout ──────────────────────────────────────── */
+.app-root {
+  display: flex;
+  height: 100dvh;        /* dvh = accounts for mobile browser chrome */
+  height: 100vh;         /* fallback */
+  overflow: hidden;
+  background: #07080f;
+}
+
+/* Main column (right of sidebar on desktop, full width on mobile) */
+.app-main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;          /* prevent flex child from overflowing */
+  overflow: hidden;
+}
+
+/* The scrollable view area */
+.app-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  /* bottom padding on mobile for the bottom nav */
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+@media (max-width: 767px) {
+  .app-content {
+    padding-bottom: 64px; /* height of bottom nav */
+  }
+}
+
+/* Mobile command palette — open from center */
+@media (max-width: 767px) {
+  .cmd-overlay {
+    padding-top: 8vh;
+    align-items: flex-start;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+  .cmd-box {
+    border-radius: 14px;
+  }
+}
