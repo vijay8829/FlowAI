@@ -1,0 +1,599 @@
+{
+  "workflows": [
+    {
+      "id": "6fc1017e-8d36-4fa0-ac24-8dfe61227b1b",
+      "name": "Email Summary Bot",
+      "description": "Summarize emails with Claude AI",
+      "nodes": [
+        {
+          "id": "t1",
+          "type": "trigger-manual",
+          "position": {
+            "x": 250,
+            "y": 50
+          },
+          "data": {
+            "nodeType": "trigger-manual",
+            "label": "Manual Trigger",
+            "config": {}
+          }
+        },
+        {
+          "id": "ai1",
+          "type": "ai-summarize",
+          "position": {
+            "x": 250,
+            "y": 200
+          },
+          "data": {
+            "nodeType": "ai-summarize",
+            "label": "AI Summarize",
+            "config": {
+              "maxLength": "2 sentences",
+              "style": "concise"
+            }
+          }
+        },
+        {
+          "id": "a1",
+          "type": "action-log",
+          "position": {
+            "x": 250,
+            "y": 350
+          },
+          "data": {
+            "nodeType": "action-log",
+            "label": "Log Result",
+            "config": {}
+          }
+        }
+      ],
+      "edges": [
+        {
+          "id": "e1",
+          "source": "t1",
+          "target": "ai1"
+        },
+        {
+          "id": "e2",
+          "source": "ai1",
+          "target": "a1"
+        }
+      ],
+      "is_active": true,
+      "created_at": "2026-04-13T10:29:10.106Z",
+      "updated_at": "2026-04-13T10:29:10.106Z"
+    },
+    {
+      "id": "0b5a0fa8-e242-4be4-ae5b-efaca6a823bb",
+      "name": "Support Ticket Classifier",
+      "description": "Auto-classify support tickets and save to DB",
+      "nodes": [
+        {
+          "id": "t1",
+          "type": "trigger-webhook",
+          "position": {
+            "x": 300,
+            "y": 50
+          },
+          "data": {
+            "nodeType": "trigger-webhook",
+            "label": "Webhook Trigger",
+            "config": {
+              "description": "Incoming support tickets"
+            }
+          },
+          "measured": {
+            "width": 224,
+            "height": 87
+          }
+        },
+        {
+          "id": "ai1",
+          "type": "ai-classify",
+          "position": {
+            "x": 300,
+            "y": 200
+          },
+          "data": {
+            "nodeType": "ai-classify",
+            "label": "Classify Priority",
+            "config": {
+              "categories": "urgent,high,medium,low"
+            }
+          },
+          "measured": {
+            "width": 224,
+            "height": 87
+          }
+        },
+        {
+          "id": "a1",
+          "type": "action-savedb",
+          "position": {
+            "x": 300,
+            "y": 350
+          },
+          "data": {
+            "nodeType": "action-savedb",
+            "label": "Save to DB",
+            "config": {
+              "table": "tickets"
+            }
+          },
+          "measured": {
+            "width": 224,
+            "height": 87
+          }
+        },
+        {
+          "id": "a2",
+          "type": "action-log",
+          "position": {
+            "x": 300,
+            "y": 500
+          },
+          "data": {
+            "nodeType": "action-log",
+            "label": "Log Result",
+            "config": {}
+          },
+          "measured": {
+            "width": 224,
+            "height": 93
+          }
+        }
+      ],
+      "edges": [
+        {
+          "type": "smoothstep",
+          "animated": true,
+          "style": {
+            "stroke": "#3b3f6a",
+            "strokeWidth": 1.5
+          },
+          "markerEnd": {
+            "type": "arrowclosed",
+            "color": "#4a4d5a",
+            "width": 16,
+            "height": 16
+          },
+          "id": "e1",
+          "source": "t1",
+          "target": "ai1"
+        },
+        {
+          "type": "smoothstep",
+          "animated": true,
+          "style": {
+            "stroke": "#3b3f6a",
+            "strokeWidth": 1.5
+          },
+          "markerEnd": {
+            "type": "arrowclosed",
+            "color": "#4a4d5a",
+            "width": 16,
+            "height": 16
+          },
+          "id": "e2",
+          "source": "ai1",
+          "target": "a1"
+        },
+        {
+          "type": "smoothstep",
+          "animated": true,
+          "style": {
+            "stroke": "#3b3f6a",
+            "strokeWidth": 1.5
+          },
+          "markerEnd": {
+            "type": "arrowclosed",
+            "color": "#4a4d5a",
+            "width": 16,
+            "height": 16
+          },
+          "id": "e3",
+          "source": "a1",
+          "target": "a2"
+        }
+      ],
+      "is_active": true,
+      "created_at": "2026-04-13T10:31:02.437Z",
+      "updated_at": "2026-04-16T08:58:05.938Z"
+    }
+  ],
+  "executions": [
+    {
+      "id": "c19b65f4-e433-4a21-90ee-8955403d9760",
+      "workflow_id": "6fc1017e-8d36-4fa0-ac24-8dfe61227b1b",
+      "workflow_name": "Email Summary Bot",
+      "status": "failed",
+      "trigger_data": {
+        "text": "Q4 revenue hit $2.3M up 30% from last year. Enterprise segment grew 45%. Customer retention is 94%. New product line driving growth.",
+        "source": "email"
+      },
+      "steps": [
+        {
+          "stepId": "bd62c5da-7a36-4113-84dc-19d4fdf7607f",
+          "nodeId": "t1",
+          "nodeType": "trigger-manual",
+          "label": "Manual Trigger",
+          "status": "success",
+          "output": {
+            "text": "Q4 revenue hit $2.3M up 30% from last year. Enterprise segment grew 45%. Customer retention is 94%. New product line driving growth.",
+            "source": "email"
+          },
+          "duration": 1,
+          "timestamp": "2026-04-13T10:29:10.114Z"
+        },
+        {
+          "stepId": "7a72ae6c-0a18-4a72-8e27-c6fbee90eacf",
+          "nodeId": "ai1",
+          "nodeType": "ai-summarize",
+          "label": "AI Summarize",
+          "status": "error",
+          "error": "Could not resolve authentication method. Expected either apiKey or authToken to be set. Or for one of the \"X-Api-Key\" or \"Authorization\" headers to be explicitly omitted",
+          "duration": 2,
+          "timestamp": "2026-04-13T10:29:10.116Z"
+        }
+      ],
+      "error": "Could not resolve authentication method. Expected either apiKey or authToken to be set. Or for one of the \"X-Api-Key\" or \"Authorization\" headers to be explicitly omitted",
+      "started_at": "2026-04-13T10:29:10.113Z",
+      "finished_at": "2026-04-13T10:29:10.116Z"
+    },
+    {
+      "id": "98d97ea7-b044-47e0-adc2-caddb5ceb5f3",
+      "workflow_id": "0b5a0fa8-e242-4be4-ae5b-efaca6a823bb",
+      "workflow_name": "Support Ticket Classifier",
+      "status": "failed",
+      "trigger_data": {
+        "ticket": "My app keeps crashing every time I try to export data. This is blocking my entire team from shipping.",
+        "user": "alice@corp.com",
+        "priority_hint": "unknown"
+      },
+      "steps": [
+        {
+          "stepId": "55534298-f5bb-46b6-ae8d-5a2afc51669d",
+          "nodeId": "t1",
+          "nodeType": "trigger-webhook",
+          "label": "Webhook Trigger",
+          "status": "success",
+          "output": {
+            "ticket": "My app keeps crashing every time I try to export data. This is blocking my entire team from shipping.",
+            "user": "alice@corp.com",
+            "priority_hint": "unknown"
+          },
+          "duration": 0,
+          "timestamp": "2026-04-13T10:31:02.472Z"
+        },
+        {
+          "stepId": "38ae5860-c2dc-4200-a217-f8927fe6d5bb",
+          "nodeId": "ai1",
+          "nodeType": "ai-classify",
+          "label": "Classify Priority",
+          "status": "error",
+          "error": "Could not resolve authentication method. Expected either apiKey or authToken to be set. Or for one of the \"X-Api-Key\" or \"Authorization\" headers to be explicitly omitted",
+          "duration": 1,
+          "timestamp": "2026-04-13T10:31:02.474Z"
+        }
+      ],
+      "error": "Could not resolve authentication method. Expected either apiKey or authToken to be set. Or for one of the \"X-Api-Key\" or \"Authorization\" headers to be explicitly omitted",
+      "started_at": "2026-04-13T10:31:02.471Z",
+      "finished_at": "2026-04-13T10:31:02.474Z"
+    },
+    {
+      "id": "457664e7-3502-407c-b932-531f483c690a",
+      "workflow_id": "0b5a0fa8-e242-4be4-ae5b-efaca6a823bb",
+      "workflow_name": "Support Ticket Classifier",
+      "status": "failed",
+      "trigger_data": {
+        "source": "manual",
+        "timestamp": "2026-04-13T10:34:44.930Z"
+      },
+      "steps": [
+        {
+          "stepId": "2b92bc4a-f42f-4bbd-9ba9-7feeccfe0448",
+          "nodeId": "t1",
+          "nodeType": "trigger-webhook",
+          "label": "Webhook Trigger",
+          "status": "success",
+          "output": {
+            "source": "manual",
+            "timestamp": "2026-04-13T10:34:44.930Z"
+          },
+          "duration": 0,
+          "timestamp": "2026-04-13T10:34:44.949Z"
+        },
+        {
+          "stepId": "43745213-4506-49b9-8ac4-818848b98ff1",
+          "nodeId": "ai1",
+          "nodeType": "ai-classify",
+          "label": "Classify Priority",
+          "status": "error",
+          "error": "Could not resolve authentication method. Expected either apiKey or authToken to be set. Or for one of the \"X-Api-Key\" or \"Authorization\" headers to be explicitly omitted",
+          "duration": 1,
+          "timestamp": "2026-04-13T10:34:44.955Z"
+        }
+      ],
+      "error": "Could not resolve authentication method. Expected either apiKey or authToken to be set. Or for one of the \"X-Api-Key\" or \"Authorization\" headers to be explicitly omitted",
+      "started_at": "2026-04-13T10:34:44.945Z",
+      "finished_at": "2026-04-13T10:34:44.955Z"
+    },
+    {
+      "id": "86a10082-721f-468a-af3b-d295aebc3e07",
+      "workflow_id": "0b5a0fa8-e242-4be4-ae5b-efaca6a823bb",
+      "workflow_name": "Support Ticket Classifier",
+      "status": "failed",
+      "trigger_data": {
+        "subject": "Q4 Revenue Report",
+        "body": "Our Q4 revenue was $2.3M, up 30% YoY. Enterprise segment grew 45%. Customer retention improved to 94%.",
+        "from": "cfo@example.com"
+      },
+      "steps": [
+        {
+          "stepId": "fc78ac31-0d64-4a94-85de-99df10b6e7d1",
+          "nodeId": "t1",
+          "nodeType": "trigger-webhook",
+          "label": "Webhook Trigger",
+          "status": "success",
+          "output": {
+            "subject": "Q4 Revenue Report",
+            "body": "Our Q4 revenue was $2.3M, up 30% YoY. Enterprise segment grew 45%. Customer retention improved to 94%.",
+            "from": "cfo@example.com"
+          },
+          "duration": 0,
+          "timestamp": "2026-04-14T14:25:21.587Z"
+        },
+        {
+          "stepId": "51346410-9740-41a5-bbfc-571b5abc7c33",
+          "nodeId": "ai1",
+          "nodeType": "ai-classify",
+          "label": "Classify Priority",
+          "status": "error",
+          "error": "401 {\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"invalid x-api-key\"},\"request_id\":\"req_011Ca3pMsMTb82i968Gqvb5D\"}",
+          "duration": 454,
+          "timestamp": "2026-04-14T14:25:22.044Z"
+        }
+      ],
+      "error": "401 {\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"invalid x-api-key\"},\"request_id\":\"req_011Ca3pMsMTb82i968Gqvb5D\"}",
+      "started_at": "2026-04-14T14:25:21.585Z",
+      "finished_at": "2026-04-14T14:25:22.044Z"
+    },
+    {
+      "id": "16557a2e-2447-458e-8d02-d8e05fc5449b",
+      "workflow_id": "0b5a0fa8-e242-4be4-ae5b-efaca6a823bb",
+      "workflow_name": "Support Ticket Classifier",
+      "status": "failed",
+      "trigger_data": {
+        "subject": "Q4 Revenue Report",
+        "body": "Our Q4 revenue was $2.3M, up 30% YoY. Enterprise segment grew 45%. Customer retention improved to 94%.",
+        "from": "cfo@example.com"
+      },
+      "steps": [
+        {
+          "stepId": "fdbb4805-cc64-4124-b393-7464579f503b",
+          "nodeId": "t1",
+          "nodeType": "trigger-webhook",
+          "label": "Webhook Trigger",
+          "status": "success",
+          "output": {
+            "subject": "Q4 Revenue Report",
+            "body": "Our Q4 revenue was $2.3M, up 30% YoY. Enterprise segment grew 45%. Customer retention improved to 94%.",
+            "from": "cfo@example.com"
+          },
+          "duration": 0,
+          "timestamp": "2026-04-14T14:26:21.854Z"
+        },
+        {
+          "stepId": "5b6f7291-17cc-4bd9-8163-4480b75e0094",
+          "nodeId": "ai1",
+          "nodeType": "ai-classify",
+          "label": "Classify Priority",
+          "status": "error",
+          "error": "401 {\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"invalid x-api-key\"},\"request_id\":\"req_011Ca3pSJpFpxk7GgVD5NuDe\"}",
+          "duration": 388,
+          "timestamp": "2026-04-14T14:26:22.245Z"
+        }
+      ],
+      "error": "401 {\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"invalid x-api-key\"},\"request_id\":\"req_011Ca3pSJpFpxk7GgVD5NuDe\"}",
+      "started_at": "2026-04-14T14:26:21.852Z",
+      "finished_at": "2026-04-14T14:26:22.245Z"
+    },
+    {
+      "id": "7fa961c2-7eb7-4626-b06d-bcad1f857236",
+      "workflow_id": "6fc1017e-8d36-4fa0-ac24-8dfe61227b1b",
+      "workflow_name": "Email Summary Bot",
+      "status": "failed",
+      "trigger_data": {},
+      "steps": [
+        {
+          "stepId": "763cda87-d174-4fc0-aff9-54581036ec84",
+          "nodeId": "t1",
+          "nodeType": "trigger-manual",
+          "label": "Manual Trigger",
+          "status": "success",
+          "output": {},
+          "duration": 1,
+          "timestamp": "2026-04-14T14:26:32.255Z"
+        },
+        {
+          "stepId": "53049301-3574-43e0-9be3-e83e1db33f98",
+          "nodeId": "ai1",
+          "nodeType": "ai-summarize",
+          "label": "AI Summarize",
+          "status": "error",
+          "error": "401 {\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"invalid x-api-key\"},\"request_id\":\"req_011Ca3pT5FTgHfMSZMAT3Fpn\"}",
+          "duration": 332,
+          "timestamp": "2026-04-14T14:26:32.589Z"
+        }
+      ],
+      "error": "401 {\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"invalid x-api-key\"},\"request_id\":\"req_011Ca3pT5FTgHfMSZMAT3Fpn\"}",
+      "started_at": "2026-04-14T14:26:32.252Z",
+      "finished_at": "2026-04-14T14:26:32.589Z"
+    },
+    {
+      "id": "233016b3-9496-464c-8eb0-889ff2cc1701",
+      "workflow_id": "0b5a0fa8-e242-4be4-ae5b-efaca6a823bb",
+      "workflow_name": "Support Ticket Classifier",
+      "status": "failed",
+      "trigger_data": {},
+      "steps": [
+        {
+          "stepId": "edd519a2-dce4-46d4-a37e-d080c4d50ac6",
+          "nodeId": "t1",
+          "nodeType": "trigger-webhook",
+          "label": "Webhook Trigger",
+          "status": "success",
+          "output": {},
+          "duration": 0,
+          "timestamp": "2026-04-14T14:26:34.755Z"
+        },
+        {
+          "stepId": "57692fe9-58cc-4358-962d-3bf5570dd1ff",
+          "nodeId": "ai1",
+          "nodeType": "ai-classify",
+          "label": "Classify Priority",
+          "status": "error",
+          "error": "401 {\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"invalid x-api-key\"},\"request_id\":\"req_011Ca3pTFtvMs9p3bQXXAxTn\"}",
+          "duration": 389,
+          "timestamp": "2026-04-14T14:26:35.147Z"
+        }
+      ],
+      "error": "401 {\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"invalid x-api-key\"},\"request_id\":\"req_011Ca3pTFtvMs9p3bQXXAxTn\"}",
+      "started_at": "2026-04-14T14:26:34.753Z",
+      "finished_at": "2026-04-14T14:26:35.147Z"
+    },
+    {
+      "id": "d48f779a-56b7-4d65-b50c-f0bf5b895e19",
+      "workflow_id": "0b5a0fa8-e242-4be4-ae5b-efaca6a823bb",
+      "workflow_name": "Support Ticket Classifier",
+      "status": "failed",
+      "trigger_data": {},
+      "steps": [
+        {
+          "stepId": "4746b3e3-c084-42c7-b351-dee419666783",
+          "nodeId": "t1",
+          "nodeType": "trigger-webhook",
+          "label": "Webhook Trigger",
+          "status": "success",
+          "output": {},
+          "duration": 0,
+          "timestamp": "2026-04-15T05:26:38.611Z"
+        },
+        {
+          "stepId": "e2ed3887-4387-4ec0-8b81-3d568d5a3e05",
+          "nodeId": "ai1",
+          "nodeType": "ai-classify",
+          "label": "Classify Priority",
+          "status": "error",
+          "error": "401 {\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"invalid x-api-key\"},\"request_id\":\"req_011Ca5168nz4wdsrwC2w9C88\"}",
+          "duration": 794,
+          "timestamp": "2026-04-15T05:26:39.407Z"
+        }
+      ],
+      "error": "401 {\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"invalid x-api-key\"},\"request_id\":\"req_011Ca5168nz4wdsrwC2w9C88\"}",
+      "started_at": "2026-04-15T05:26:38.610Z",
+      "finished_at": "2026-04-15T05:26:39.407Z"
+    },
+    {
+      "id": "bff077a7-f38f-4ae8-a8ab-180025b1a31d",
+      "workflow_id": "0b5a0fa8-e242-4be4-ae5b-efaca6a823bb",
+      "workflow_name": "Support Ticket Classifier",
+      "status": "failed",
+      "trigger_data": {
+        "subject": "Test",
+        "body": "Hello world"
+      },
+      "steps": [
+        {
+          "stepId": "6f6cba56-89b2-4341-a178-f31859d41a8c",
+          "nodeId": "t1",
+          "nodeType": "trigger-webhook",
+          "label": "Webhook Trigger",
+          "status": "success",
+          "output": {
+            "subject": "Test",
+            "body": "Hello world"
+          },
+          "duration": 0,
+          "timestamp": "2026-04-15T05:38:53.831Z"
+        },
+        {
+          "stepId": "d47f1942-bac3-42d0-b984-8c46c13e259b",
+          "nodeId": "ai1",
+          "nodeType": "ai-classify",
+          "label": "Classify Priority",
+          "status": "error",
+          "error": "401 {\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"invalid x-api-key\"},\"request_id\":\"req_011Ca522LCLZzwXA7jCndxhw\"}",
+          "duration": 318,
+          "timestamp": "2026-04-15T05:38:54.150Z"
+        }
+      ],
+      "error": "401 {\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"invalid x-api-key\"},\"request_id\":\"req_011Ca522LCLZzwXA7jCndxhw\"}",
+      "started_at": "2026-04-15T05:38:53.831Z",
+      "finished_at": "2026-04-15T05:38:54.150Z"
+    },
+    {
+      "id": "007f4c4f-92f0-4a17-9d14-5e0e0cbddba0",
+      "workflow_id": "0b5a0fa8-e242-4be4-ae5b-efaca6a823bb",
+      "workflow_name": "Support Ticket Classifier",
+      "status": "failed",
+      "trigger_data": {
+        "subject": "Test",
+        "body": "Hello world"
+      },
+      "steps": [
+        {
+          "stepId": "6adb14de-4b4b-4f2b-ac00-c98d9d948c78",
+          "nodeId": "t1",
+          "nodeType": "trigger-webhook",
+          "label": "Webhook Trigger",
+          "status": "success",
+          "output": {
+            "subject": "Test",
+            "body": "Hello world"
+          },
+          "duration": 1,
+          "timestamp": "2026-04-15T05:40:03.527Z"
+        },
+        {
+          "stepId": "16a67385-ede9-4fda-a6ef-2886d0f074d5",
+          "nodeId": "ai1",
+          "nodeType": "ai-classify",
+          "label": "Classify Priority",
+          "status": "error",
+          "error": "401 {\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"invalid x-api-key\"},\"request_id\":\"req_011Ca527UCBjcfjshaatYn76\"}",
+          "duration": 331,
+          "timestamp": "2026-04-15T05:40:03.860Z"
+        }
+      ],
+      "error": "401 {\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"invalid x-api-key\"},\"request_id\":\"req_011Ca527UCBjcfjshaatYn76\"}",
+      "started_at": "2026-04-15T05:40:03.524Z",
+      "finished_at": "2026-04-15T05:40:03.860Z"
+    }
+  ],
+  "webhook_tokens": [
+    {
+      "id": "48e83e66-e352-4048-a124-08332d60ac19",
+      "workflow_id": "6fc1017e-8d36-4fa0-ac24-8dfe61227b1b",
+      "token": "914312bd7ca545308ff7ad98bc51e85a",
+      "created_at": "2026-04-13T10:29:12.143Z"
+    },
+    {
+      "id": "46f46116-a467-4813-97a9-78378d2d9a2b",
+      "workflow_id": "0b5a0fa8-e242-4be4-ae5b-efaca6a823bb",
+      "token": "7a394df48f10461c96c88ebf171f9855",
+      "created_at": "2026-04-13T10:31:02.458Z"
+    }
+  ],
+  "workflow_data": [
+    {
+      "id": "d87afb83-511f-40e1-a007-4ea0675d9c88",
+      "table": "test",
+      "data": {
+        "test": true
+      },
+      "created_at": "2026-04-15T05:40:45.776Z"
+    }
+  ]
+}
